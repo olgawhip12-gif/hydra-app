@@ -1,8 +1,8 @@
 {
   "name": "Player List",
   "short_name": "Player List",
-  "start_url": "/hydra-app/",
-  "scope": "/hydra-app/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#121212",
   "theme_color": "#121212",
