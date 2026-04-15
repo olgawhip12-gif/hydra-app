@@ -2,18 +2,12 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Player List</title>
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HYDRA App</title>
   <link rel="manifest" href="manifest.json">
-  
-  <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#121212">
-  
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Player List">
-
   <style>
     body, html {
       margin: 0;
@@ -33,22 +27,25 @@
 </head>
 <body>
 
-  <iframe 
-    id="main-frame"
-    src="https://script.google.com/macros/s/AKfycbwYjuf8PaZj4UXQUlQGS0s44Kb1LTbKpbiODHRHMANp6Y-XZKmaQ0N_-irfPXruRWeRsQ/exec" 
-    allow="clipboard-read; clipboard-write"
-    sandbox="allow-forms allow-scripts allow-same-origin allow-popups">
-  </iframe>
+  
+
+
+  <iframe src="https://script.google.com/macros/s/AKfycbwQoNUsJg9XhDIuUAiXzQLDCydT1VY7ucZDyFOUB5W39Ve0noj6dxTmkVjCJi353uJEXg/exec" 
+        style="border:none;width:100%;height:100vh;" 
+        allow="clipboard-read; clipboard-write; display-capture" 
+        sandbox="allow-forms allow-scripts allow-same-origin allow-popups">
+</iframe>
 
   <script>
-    // Реєстрація Service Worker для підтримки PWA
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(err => console.log('SW error:', err));
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('Service Worker зареєстровано!'))
+          .catch(err => console.error('Помилка реєстрації SW:', err));
       });
     }
 
-    // Фікс висоти екрана для мобільних браузерів
+    // Код для коректної висоти на мобільних пристроях
     const fixHeight = () => {
       document.body.style.height = window.innerHeight + 'px';
     };
