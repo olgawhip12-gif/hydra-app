@@ -8,23 +8,15 @@
     <style>
         body { margin: 0; padding: 0; background: #121212; font-family: sans-serif; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
         
-        /* Кнопка оновлення зовні фрейму */
-        .header { background: #121212; padding: 10px; border-bottom: 1px solid #333; z-index: 1000; }
+        .header { background: #121212; padding: 10px; border-bottom: 1px solid #333; z-index: 1000; flex-shrink: 0; }
+        
         .refresh-btn { 
             width: 100%; background: #1e1e1e; color: #3498db; border: 1px solid #3498db; 
-            padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer;
+            padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 14px;
         }
         .refresh-btn:active { background: #3498db; color: #fff; }
 
-        <iframe 
-    id="main-frame" 
-    src="ТВІЙ_URL_APPS_SCRIPT" 
-    allow="clipboard-write"
-    style="flex-grow: 1; border: none; width: 100%; height: 100%;">
-</iframe>
-        
-        
-        
+        #main-frame { flex-grow: 1; border: none; width: 100%; height: 100%; background: #121212; }
     </style>
 </head>
 <body>
@@ -33,16 +25,22 @@
         <button class="refresh-btn" onclick="refreshFrame()">🔄 Оновити список</button>
     </div>
 
-    <iframe id="main-frame" src="https://script.google.com/macros/s/AKfycbw-K7TBriDxIE-aF6rhegXzX61uAK0doDgjZDBkURZw6pEcqrnHL-2nUwyaaCZOy6-4ig/exec"></iframe>
+    <iframe 
+        id="main-frame" 
+        src="https://script.google.com/macros/s/AKfycbw-K7TBriDxIE-aF6rhegXzX61uAK0doDgjZDBkURZw6pEcqrnHL-2nUwyaaCZOy6-4ig/exec" 
+        allow="clipboard-write">
+    </iframe>
 
     <script>
         function refreshFrame() {
             const frame = document.getElementById('main-frame');
             const btn = document.querySelector('.refresh-btn');
+            const originalSrc = frame.src;
+            
             btn.innerText = '⌛ Оновлюю...';
             
-            // Перезавантажуємо фрейм
-            frame.src = frame.src; 
+            // Перезавантажуємо фрейм через src, щоб уникнути кешування
+            frame.src = originalSrc; 
 
             setTimeout(() => {
                 btn.innerText = '🔄 Оновити список';
