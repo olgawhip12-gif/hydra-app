@@ -1,56 +1,49 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HYDRA App</title>
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#121212">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background: #121212;
-      overflow: hidden;
-    }
-    iframe {
-      border: none;
-      width: 100%;
-      height: 100vh;
-      display: block;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Player List App</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body { margin: 0; padding: 0; background: #121212; font-family: sans-serif; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+        
+        /* Кнопка оновлення зовні фрейму */
+        .header { background: #121212; padding: 10px; border-bottom: 1px solid #333; z-index: 1000; }
+        .refresh-btn { 
+            width: 100%; background: #1e1e1e; color: #3498db; border: 1px solid #3498db; 
+            padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer;
+        }
+        .refresh-btn:active { background: #3498db; color: #fff; }
+
+        iframe { flex-grow: 1; border: none; width: 100%; height: 100%; }
+    </style>
 </head>
 <body>
 
-  
+    <div class="header">
+        <button class="refresh-btn" onclick="refreshFrame()">🔄 Оновити список</button>
+    </div>
 
+    <iframe id="main-frame" src="ТВІЙ_URL_APPS_SCRIPT_ТУТ"></iframe>
 
-  <iframe src="https://script.google.com/macros/s/AKfycbwQoNUsJg9XhDIuUAiXzQLDCydT1VY7ucZDyFOUB5W39Ve0noj6dxTmkVjCJi353uJEXg/exec" 
-        style="border:none;width:100%;height:100vh;" 
-        allow="clipboard-read; clipboard-write; display-capture" 
-        sandbox="allow-forms allow-scripts allow-same-origin allow-popups">
-</iframe>
+    <script>
+        function refreshFrame() {
+            const frame = document.getElementById('main-frame');
+            const btn = document.querySelector('.refresh-btn');
+            btn.innerText = '⌛ Оновлюю...';
+            
+            // Перезавантажуємо фрейм
+            frame.src = frame.src; 
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-          .then(reg => console.log('Service Worker зареєстровано!'))
-          .catch(err => console.error('Помилка реєстрації SW:', err));
-      });
-    }
+            setTimeout(() => {
+                btn.innerText = '🔄 Оновити список';
+            }, 1500);
+        }
 
-    // Код для коректної висоти на мобільних пристроях
-    const fixHeight = () => {
-      document.body.style.height = window.innerHeight + 'px';
-    };
-    window.addEventListener('resize', fixHeight);
-    fixHeight();
-  </script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
 </body>
 </html>
