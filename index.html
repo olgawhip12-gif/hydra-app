@@ -1,90 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <base target="_top">
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-
-  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#121212">
-
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      background: #121212;
-      color: #e0e0e0;
-      font-family: system-ui;
-    }
-
-    .row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #1e1e1e;
-      margin: 10px;
-      padding: 15px;
-      border-radius: 12px;
-    }
-
-    .name {
-      font-size: 18px;
-      font-weight: bold;
-      color: white;
-    }
-
-    .copy-btn {
-      background: #2d2d2d;
-      border: 1px solid #444;
-      padding: 10px;
-      border-radius: 10px;
-      color: white;
-      cursor: pointer;
-    }
-
-    .btn {
-      background: #d63031;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    iframe { display: none; }
-  </style>
+</head>
+<body style="margin:0;background:#121212;">
+  <iframe src="ВСТАВ_ТУТ_СВІЙ_GAS_URL" style="border:none;width:100%;height:100vh;"></iframe>
 
   <script>
-    // ✅ СУЧАСНЕ КОПІЮВАННЯ (ПРАЦЮЄ В PWA І CHROME)
-    async function copyToClipboard(text, btn) {
-      try {
-        await navigator.clipboard.writeText(text);
-
-        const old = btn.innerText;
-        btn.innerText = "✅";
-        setTimeout(() => btn.innerText = old, 800);
-
-      } catch (err) {
-        alert("Не вдалося скопіювати");
-        console.log(err);
-      }
-    }
-
-    function fadeOut(id) {
-      const row = document.getElementById("row-" + id);
-      if (row) {
-        row.style.opacity = "0.3";
-        setTimeout(() => row.style.display = "none", 500);
-      }
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
     }
   </script>
-</head>
-
-<body>
-  <div id="list">
-    <!-- ТУТ ТВОЇ РЯДКИ З GAS -->
-  </div>
-
-  <iframe name="hidden_frame"></iframe>
 </body>
 </html>
