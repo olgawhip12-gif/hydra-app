@@ -3,15 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>HYDRA App</title>
+  <title>Player List</title>
+  
   <link rel="manifest" href="manifest.json">
+  
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#121212">
+  
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Player List">
+
   <style>
-    body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #121212; overflow: hidden; }
-    iframe { border: none; width: 100%; height: 100vh; display: block; }
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #121212;
+      overflow: hidden;
+    }
+    iframe {
+      border: none;
+      width: 100%;
+      height: 100vh;
+      display: block;
+    }
   </style>
 </head>
 <body>
-  <iframe src="https://script.google.com/macros/s/AKfycbzIeFfV7d3DlZZPEjSn7veohNzzW5ioxzo220-tPE-9UYhdvYK14JMkCzikiww7lnKY6g/exec" allow="clipboard-write"></iframe>
+
+  <iframe 
+    id="main-frame"
+    src="https://script.google.com/macros/s/AKfycbwYjuf8PaZj4UXQUlQGS0s44Kb1LTbKpbiODHRHMANp6Y-XZKmaQ0N_-irfPXruRWeRsQ/exec" 
+    allow="clipboard-read; clipboard-write"
+    sandbox="allow-forms allow-scripts allow-same-origin allow-popups">
+  </iframe>
+
+  <script>
+    // Реєстрація Service Worker для підтримки PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(err => console.log('SW error:', err));
+      });
+    }
+
+    // Фікс висоти екрана для мобільних браузерів
+    const fixHeight = () => {
+      document.body.style.height = window.innerHeight + 'px';
+    };
+    window.addEventListener('resize', fixHeight);
+    fixHeight();
+  </script>
 </body>
 </html>
