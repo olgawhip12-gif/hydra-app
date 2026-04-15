@@ -6,61 +6,12 @@
   <title>HYDRA App</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#121212">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      background: #121212;
-      overflow: hidden;
-    }
-    iframe {
-      border: none;
-      width: 100%;
-      height: 100vh;
-      display: block;
-    }
+    body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #121212; overflow: hidden; }
+    iframe { border: none; width: 100%; height: 100vh; display: block; }
   </style>
 </head>
 <body>
-
-  <iframe id="hydra-frame" src="https://script.google.com/macros/s/AKfycbyY9WP_m7FQygk2iAtFMNJldbYDRBkuXDI4ue0xtz1fUmEhL-Bs96PExVlUkSQn7eJXEA/exec" allow="clipboard-write"></iframe>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js');
-      });
-    }
-
-    const iframe = document.getElementById('hydra-frame');
-
-    // Функція для оновлення вмісту
-    function refreshHydra() {
-      const currentSrc = iframe.src;
-      iframe.src = ''; 
-      iframe.src = currentSrc;
-    }
-
-    // Оновлювати при розгортанні додатка
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === 'visible') {
-        refreshHydra();
-      }
-    });
-
-    // Оновлювати при поверненні фокуса (якщо перемикалися між програмами)
-    window.addEventListener('focus', refreshHydra);
-
-    // Корекція висоти для мобільних браузерів
-    const fixHeight = () => {
-      document.body.style.height = window.innerHeight + 'px';
-    };
-    window.addEventListener('resize', fixHeight);
-    fixHeight();
-  </script>
+  <iframe src="https://script.google.com/macros/s/AKfycbyY9WP_m7FQygk2iAtFMNJldbYDRBkuXDI4ue0xtz1fUmEhL-Bs96PExVlUkSQn7eJXEA/exec" allow="clipboard-write"></iframe>
 </body>
 </html>
