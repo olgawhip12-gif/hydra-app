@@ -2,7 +2,7 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>HYDRA App</title>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#121212">
@@ -27,22 +27,35 @@
 </head>
 <body>
 
- <iframe src="Https://script.google.com/macros/s/AKfycbyY9WP_m7FQygk2iAtFMNJldbYDRBkuXDI4ue0xtz1fUmEhL-Bs96PExVlUkSQn7eJXEA/exec" 
-        style="border:none;width:100%;height:100vh;" 
-        allow="clipboard-read; clipboard-write; display-capture" 
-        sandbox="allow-forms allow-scripts allow-same-origin allow-popups">
-</iframe>
- 
+  <iframe id="hydra-frame" src="https://script.google.com/macros/s/AKfycbyY9WP_m7FQygk2iAtFMNJldbYDRBkuXDI4ue0xtz1fUmEhL-Bs96PExVlUkSQn7eJXEA/exec" allow="clipboard-write"></iframe>
+
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-          .then(reg => console.log('Service Worker зареєстровано!'))
-          .catch(err => console.error('Помилка реєстрації SW:', err));
+        navigator.serviceWorker.register('sw.js');
       });
     }
 
-    // Код для коректної висоти на мобільних пристроях
+    const iframe = document.getElementById('hydra-frame');
+
+    // Функція для оновлення вмісту
+    function refreshHydra() {
+      const currentSrc = iframe.src;
+      iframe.src = ''; 
+      iframe.src = currentSrc;
+    }
+
+    // Оновлювати при розгортанні додатка
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === 'visible') {
+        refreshHydra();
+      }
+    });
+
+    // Оновлювати при поверненні фокуса (якщо перемикалися між програмами)
+    window.addEventListener('focus', refreshHydra);
+
+    // Корекція висоти для мобільних браузерів
     const fixHeight = () => {
       document.body.style.height = window.innerHeight + 'px';
     };
