@@ -1,7 +1,10 @@
-const CACHE_NAME = 'hydra-cache-v1';
+const CACHE_NAME = 'player-list-cache-v2';
 const urlsToCache = [
+  './',
   'index.html',
-  'manifest.json'
+  'manifest.json',
+  'icon-192.png', // Обов'язково додай назви своїх файлів іконок
+  'icon-512.png'
 ];
 
 // Встановлення
@@ -31,11 +34,19 @@ self.addEventListener('activate', event => {
   return self.clients.claim();
 });
 
-// Обробка запитів
+// Обробка запитів (Стратегія: мережа з відкатом на кеш)
 self.addEventListener('fetch', event => {
   event.respondWith(
     fetch(event.request).catch(() => {
-      return caches.match(event.request);
+      return caches.match(event.request).then(response => {
+        if (response) {
+          return response;
+        }
+        // Якщо це перехід на головну сторінку, повертаємо index.html
+        if (event.request.mode === 'navigate') {
+          return caches.match('index.html');
+        }
+      });
     })
   );
 });
