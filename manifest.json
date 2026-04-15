@@ -1,6 +1,6 @@
 {
-  "name": "HYDRA Player Check",
-  "short_name": "HYDRA",
+  "name": "Player List",
+  "short_name": "RlayerList",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#121212",
